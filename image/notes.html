@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="notes.css"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.js"></script> 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery v1.9.1 -->
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Animate.css v3.5.2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css" rel="stylesheet" />
+    <!-- AOS animation -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        /* 套用google font */
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Fira+Sans&display=swap');
+        
+        @media (max-width:768px) {
+        .container-fluid{
+            grid-template-columns: auto;
+            grid-row: 2;
+            grid-column: 1;
+        }
+        .notes_menu_btn{
+            width: 100%;
+            text-align: center;
+        }
+        .notes_menu_layout{
+            display: none;
+        }
+        .notes{
+            padding-left: 0;
+        }
+        .search_layout{
+                display: block;
+            }
+        }
+        @media (min-width:769px) {
+            .search_layout{
+                display: none;
+            }
+        }
+        @media (max-width:849px) {
+            .nav_btn:not(:first-child){
+            display: none;
+            }
+        .special{
+            position: absolute;
+            left: -9999px;
+            }
+        }
+        @media (min-width:850px) {
+            .menu_icon{
+            display: none; 
+            }
+        }
+
+    </style>
+    <title>HJL's notes</title>
+</head>
+<body>
+    <!-- 導覽列 -->
+    <div class="topnav fixed-top">
+        <h2 onclick="location.href='notes.html'">HJL's notes</h2>
+        <div class="menu_icon" onclick="show_menu_overlay()">menu</div>
+    </div>
+        <!-- menu overlay -->
+        <div id="show_menu_overlay">
+            <div class="menu_overlay_layout">
+                <div class="off_menu_overlay" id="off_menu_overlay" onclick="off_menu_overlay()">
+                    <span class="material-symbols-outlined">
+                        close
+                    </span>
+                </div>
+                <div class="menu_btns">
+                    <div class="notes_menu_btn" onclick="showDiv('_all');changeBtn_color('btn_all');close_overlay();location.href='#div_all'"id="menu_all" >全部筆記</div>
+                    <div class="notes_menu_btn" onclick="showDiv('_design');changeBtn_color('btn_design');close_overlay();location.href='#div_design'"id="menu_design">前端架構與設計</div>
+                    <div class="notes_menu_btn" onclick="showDiv('_tool');changeBtn_color('btn_tool');close_overlay();location.href='#div_tool'"id="menu_tool">前端工具筆記</div>
+                    <div class="notes_menu_btn" onclick="showDiv('_htmlcss');changeBtn_color('btn_htmlcss');close_overlay();location.href='#div_htmlcss'" id="menu_htmlcss">HTML/CSS 筆記</div>
+                    <div class="notes_menu_btn" onclick="showDiv('_js');changeBtn_color('btn_js');close_overlay();location.href='#div_js'"id="menu_js">JavaScript筆記</div>
+                    <div class="notes_menu_btn" onclick="showDiv('_jquery');changeBtn_color('btn_jquery');close_overlay();location.href='#div_jquery'"id="menu_jquery">jQuery 筆記</div>
+                    <div class="notes_menu_btn" onclick="showDiv('_vue');changeBtn_color('btn_vue');close_overlay();location.href='#div_vue'"id="menu_vue">vue 筆記</div>
+                    <div class="notes_menu_btn" onclick="showDiv('_animation');changeBtn_color('btn_animation');close_overlay();location.href='#div_animation'" id="menu_animation">動畫筆記</div>
+                    <div class="notes_menu_btn" onclick="showDiv('_git_github');changeBtn_color('btn_git_github');close_overlay();location.href='#div_git_github'"id="menu_git_github">Git & GitHub筆記</div>
+                    <div class="notes_menu_btn" onclick="showDiv('_other');changeBtn_color('btn_other');close_overlay();location.href='#div_other'"id="menu_other">其他</div>
+                </div>
+            </div>
+        </div>
+
+    <!-- 筆記主體：側邊欄menu與筆記內容 -->
+    <div class="container-fluid">
+        <div class="notes_menu_layout">
+            <input type="text" class="search_input" placeholder="請輸入關鍵字">
+            <span class="material-symbols-outlined search_icon" >
+                    search
+            </span>
+            <div class="notes_menu_btn" onclick="showDiv('_all');changeBtn_color('btn_all');location.href='#div_all'" id="btn_all">全部筆記</div>
+
+            <div class="notes_menu_btn" onclick="showDiv('_design');changeBtn_color('btn_design')" id="btn_design">前端架構與設計</div>
+            <div class="notes_menu_btn" onclick="showDiv('_tool');changeBtn_color('btn_tool')" id="btn_tool">前端工具筆記</div>
+            <div class="notes_menu_btn" onclick="showDiv('_htmlcss');changeBtn_color('btn_htmlcss');location.href='#div_htmlcss'" id="btn_htmlcss">HTML/CSS筆記</div>
+            <div class="notes_menu_btn" onclick="showDiv('_js');changeBtn_color('btn_js');location.href='#div_js'"id="btn_js">JavaScript筆記</div>
+            <div class="notes_menu_btn" onclick="showDiv('_jquery');changeBtn_color('btn_jquery');location.href='#div_jquery'"id="btn_jquery">jQuery 筆記</div>
+            <div class="notes_menu_btn" onclick="showDiv('_vue');changeBtn_color('btn_vue');location.href='#div_vue'" id="btn_vue">vue 筆記</div>
+            <div class="notes_menu_btn" onclick="showDiv('_animation');changeBtn_color('btn_animation');location.href='#div_animation'" id="btn_animation">動畫筆記</div>
+            <div class="notes_menu_btn" onclick="showDiv('_git_github');changeBtn_color('btn_git_github');location.href='#div_git_github'" id="btn_git_github">Git & GitHub筆記</div>
+            <div class="notes_menu_btn" onclick="showDiv('_other');changeBtn_color('btn_other');location.href='#div_other'" id="btn_other">其他</div>
+        </div>
+
+        <!-- 搜尋欄位 -->
+        <div class="notes">
+            <div class="search_layout">
+                <input type="text" class="keywords" placeholder="請輸入關鍵字">
+                <span class="material-symbols-outlined search_symbol" >
+                        search
+                </span>
+            </div>
+            
+            <!-- 全部筆記 -->
+            <div id="div_all">
+            </div>
+    
+            <!-- 前端架構與設計筆記 -->
+            <div id="div_design" class="hidden">
+                <div class="notes_layout">
+                    <p class="title">
+                        MVC模式
+                    </p> 
+                    <div class="content">
+                    <p class="subtitle">意涵</p>
+                    <ul>
+                        <li>
+                            Model：用來跟資料庫進行溝通，但不會去管資料怎麼操作、顯示。Controller會跟Model要資料
+                        </li>
+                        <li>
+                            View：對應到HTML，把資料呈現的HTML頁面傳給Client
+                        </li>
+                        <li>
+                            Controller：Model和View的橋樑，負責把資料傳給View，讓View生成HTML
+                        </li>
+                    </ul>
+                    <p class="subtitle">優勢</p>
+                    <ul>
+                        <li>
+                            模組化： 將應用程式分解成三個獨立的組件，使每個組件都可以獨立開發、測試和維護。
+                        </li>
+                        <li>
+                            可擴展性： 新功能的添加或現有功能的修改不太可能影響其他組件，使系統更容易擴展。
+                        </li>
+                        <li>
+                            可維護性： 由於不同組件的職責明確，代碼的維護和排錯變得更加容易。
+                        </li>
+                        <li>
+                            分工協作： 不同的團隊成員可以同時開發不同組件，提高開發效率。
+                        </li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 前端工具筆記 -->
+            <div id="div_tool" class="hidden">
+                
+                <div class="notes_layout">
+                    <p class="title">cookies v.s. session storage  v.s. local storage</p>
+                    <div class="content">
+                        <p class="subtitle">cookies</p>
+                        有一個指定的生命週期，通常用來client和server間的資料傳輸，ex.驗證身份、記錄用戶在網站上的活動紀錄
+                        <ul>
+                            <li>可以是session（會話期間）或是具體到期日期</li>
+                            <li>如果未設定指定期間，那就是僅在瀏覽器打開的時間內有效。</li>
+                        </ul>
+                        <p class="subtitle">session storage</p>
+                        生命週期指在「當前」瀏覽器，瀏覽器關掉就會被清掉了
+                        <p class="subtitle">local storage</p>
+                        生命週期是永久的，除非手動刪除。
+                        <p class="important">怎麼選擇？</p>
+                        <ul>
+                            <li>如果只需要短期保存數據，且希望時間到自動刪除:Session Storage</li>
+                            <li>要長期保存數據:Local Storage</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- html和css的筆記們 -->
+            <div id="div_htmlcss" class="hidden">
+                <div class="notes_layout">
+                    <p class="title">
+                        當文字與google font icon放在一起時，兩者沒有在同個高度怎麼辦？
+                    </p> 
+                    <div class="content">
+                        把文字那個元素的css改成<span class="important">vertical-align: top;</span>即可！
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        flex-wrap
+                    </p> 
+                    <div class="content">
+                        <div class="subtitle">意涵</div>
+                        用於控制Flex容器中的子元素如何排列和換行
+                        <div class="subtitle">值</div>
+                        <ul>
+                            <li>nowrap：這是默認的，也就是讓子元素儘可能都在同一行</li>
+                            <li>wrap：如果空間不足，子元素會換行。RWD常用</li>
+                            <li>wrap-reverse：跟wrap很像，只是是從容器的<span class="important">尾部</span>開始排列</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        DOMContentLoaded
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">先了解網頁載入順序</p>
+                        <ul>
+                            <li>先解析HMTL，由上而下進行解析，遇到＜script＞會先暫停，換js接手處理，執行完回來繼續解析HTML</li>
+                            <li>＜head＞裡的css全部下載完才會執行js，但是如果是有外部css，那麼外部css和外部js是一起進行</li>
+                        </ul>
+                        <p class="important">那麼問題來了，js到底應該放在哪裡？</p>
+                        <p class="important">ANS:取決於js的功能還有加在順序之需要，要放＜head＞或是＜body＞或是＜div＞皆可</p>
+                        <ul>
+                            <li>放body前好處：畫面可以更快呈現，避免影響到還沒有載入的HTML元素，也就是避免「阻塞效應」發生。</li>
+                            <li>放body前壞處：因為＜script＞最後才載入，所以網頁會缺乏功能性。解決方法- <span class="important">在＜script＞中加入async和defer</span></li>
+                        </ul>
+                        <p class="subtitle">HTML和DOM的關係</p>
+                        HTML解析完就會產生DOM結構。藉由DOM來表示網頁的結構和內容，開發者可以透過JavaScript等腳本語言與這個DOM交互，動態改變網頁的內容和外觀。
+                        <p class="subtitle">意涵</p>
+                        就是DOM完成時才會觸發的事件。
+                        <p class="subtitle">目的</p>
+                        幫助開發者偵測什麼時候要執行這些script
+                        <p class="subtitle">時機</p>
+                        載入網頁時
+
+                        <p>資料來源：https://medium.com/@jacobhsu/js-css-html載入順序-397fa70ea400</p>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        load（window.onload）
+                    </p> 
+                    <div class="content">
+                       <p class="subtitle">意涵</p>
+                       <span class="important">HTML完全載入、解析完，且css也載完了</span>才會觸發。
+                        <p class="subtitle">和DOMContentLoaded之比較</p>
+                        load會在DOMContentLoaded「後」才被觸發。
+                        <p class="subtitle">時機</p>
+                        載入網頁時
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        beforeunload
+                    </p> 
+                    <div class="content">
+                      要<span class="important">「準備」離開網頁時</span>才會被觸發，例如跳出「確定要離開了嗎」那種alert，就是使用beforeunload觸發的。
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        unload
+                    </p> 
+                    <div class="content">
+                      <span class="important">離開網頁「後」</span>才會被觸發，例如想要知道使用者當時是什麼時候離開網頁，就可以用unload
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        defer
+                    </p> 
+                    <div class="content">
+                        <div class="subtitle">意涵</div>
+                        建構DOM的同時，在背景載入＜script＞。如果比DOM還早載完，那就等到DOM完成才會執行
+                        <div class="subtitle">使用時機</div>
+                        假設有A和B兩個＜script＞，A依賴B，若要確保A在B之前就執行，就要使用defer
+                    </div>
+                    <div class="example">
+                        ＜script＞ <br>
+                            var myVariable = "Hello from B!"; <br>
+                        ＜/script＞ <br>
+                        ＜script defer＞ <br>
+                            console.log("A 在 B 之後執行，依賴的變數：" + myVariable);<br>
+                        ＜/script＞
+                        <br>
+                       <p class="important">在這個例子中，上面的＜script＞定義了一個變數 myVariable，而下面的＜script＞則使用 defer 屬性以確保它在上面的＜script＞之後執行。這樣，下面的＜script＞就可以安全地依賴於上面的＜script＞中定義的變數，確保下面的＜script＞在上面的＜script＞之後執行。</p>
+                        
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        async
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">意涵</p>
+                        asynchronus，非同步，即解析HTML時，不用等＜script＞載入和執行，也就是瀏覽器會在下載指令的同時繼續做「渲染」，不會造成阻塞。
+                        <p class="subtitle">使用時機</p>
+                        如果指令間並沒有依賴關係存在，就用async
+                        <p class="important">壞處：無法保證指令的執行順序</p>
+                        <p class="important">和defer不同之處：async的＜script＞和HTML解析彼此獨立</p>
+                        <ul>
+                            <li>下載不會停止解析HTML</li>
+                            <li class="important">但是「執行」會暫停解析HTML喔！</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        ＜link＞要放哪裡？
+                    </p> 
+                    <div class="content">
+                        <p class="important">ANS:放在＜head＞中！</p>
+                        原因在於，可以確保瀏覽器在選染網頁內容時，就已經載入需要的外部資源。倘若放在頁面底部，那麼瀏覽器載入時，使用者會看到沒有用css美化過的網頁才載入css
+                    </div>
+                </div>
+                <div class="notes_layout" >
+                    <p class="title">
+                        我想要圖片跟文字各佔一半！-Grid Layout
+                    </p>
+                    <div class="content">
+                        當我想要讓圖片和文字在同個div裡，我希望它各佔一半時： 
+                        <p>首先，圖片先設定寬度大小</p>
+                        <p>其次，將它們所屬的那個div（父元素）設定為</p>
+            
+                        <p>display:grid;</p>
+                        grid-template-columns: 1fr 1fr;
+            
+                        <p>其中，fr表示單位，分數的概念，有兩個1fr則表示，我要把這個div切成兩等份。如果有三個1fr則表示每一塊佔1/3，以此類推。</p>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        用Grid Layout設計出3欄（行）2列，並且具RWD效果
+                    </p> 
+                    <div class="content">
+                        首先，欄位有三行，列有兩列，其中某一個item是佔了兩列。 <br>
+                        所以利用Grid Layout時，display：grid; grid-template-columns利用百分比去寫你要的三欄佔比大小，並且利用grid-gap去調整間距。 
+                        <p>其次，怎麼將其中一個item變成涵蓋兩列？ </p>
+                        先找到「它是第幾欄」，比如是第三欄那就寫grid-column:3;然後要把這個item擴展把列變寬-- grid-row:1/span; <br>
+                        其中，因為只有那個item要調整，所以寫1;利用span進行擴展，擴展為兩列，則寫2;
+                        <p>再來，怎麼變成RWD？利用media query去調整。裡面寫：</p>
+                        grid-template-columns:auto;<br>
+                        grid-column:1; <br>
+                        grid-row:5;
+                        <p class="important">放父層！</p>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        margin.padding.border
+                    </p> 
+                    <div class="content">
+                        margin:使元素跟元素之間不要靠太近（外間距）<br>
+                        padding:使元素和內容不要靠太近（內間距）<br>
+                        border:外圍 box-sizing:調整內距和標框的計算方式，又包含content-box（僅包含內容寬度）和border-box（包含padding和border））
+            
+                        <p>寫法：</p>
+                        上、右、下、左 ex. margin: 20px 15px 10px 30px;<br>
+                        上、左右、下 ex. padding: 100px auto 20px;<br>
+                        上下、左右 ex. margin: 20px 15px ;<br>
+                        上下左右 padding: 20px;
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        border-box v.s. content-box
+                    </p> 
+                    <div class="content">
+                        <ul>
+                            <li>現在預設值為content-box</li>
+                            <li>兩者區別方式在於：content-box的width和height <span class="important">並不包含padding和margin</span>，只有content </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        display:none v.s. visibility:hidden
+                    </p> 
+                    <div class="content">
+                        display:none 隱藏且不佔空間 <br>
+                        visibility:hidden 隱藏且佔空間
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        一樣高的col(不受內容文字多寡影響)
+                    </p> 
+                    <div class="content">
+                        父層：display: flex;<br>
+                        子元素：flex: 1; （使子元素擴展以填滿可用空間）
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        置中！
+                    </p> 
+                    <div class="content">
+                        <div class="subtitle">
+                            置中div（only水平置中）
+                        </div>
+                        <div class="important">這會受到div上方有無文字或是有無div而影響位置喔！</div>
+                        <p>display:block; </p>
+                        margin:10px auto 15px;
+                        <div class="subtitle">
+                            設定div裡面的文字水平垂直置中
+                        </div>
+                        <p>假設父層（div）的寬是500px、高是500px;文字就設為： </p>
+                        text-align:center; line-height:500px;
+                        <div class="subtitle">
+                            用flexbox水平垂直置中"div裡面的"文字
+                        </div>
+                        <p class="important">這超好用的！放父層！！</p>
+                            <p>display:flex;</p>
+                            justify-content:center;<br>
+                            align-items:center;
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        block v.s. inline v.s.inline-block
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">block</p>
+                        <ul>
+                            <li>
+                                會繼承父元素的寬度，並且佔一行，除非你用display去變更值
+                            </li>
+                            <li>例如：＜p＞＜div＞</li>
+                            <li>可以透過css屬性去調整寬和高等</li>
+                        </ul>
+                        <p class="subtitle">inline</p>
+                        <ul>
+                            <li>
+                                會在同一行，除非你用display去變更值
+                            </li>
+                            <li>例如：＜span>
+                            <li>無法透過css屬性去調整寬和高</li>
+                        </ul>
+                        <p class="subtitle">inline-block</p>
+                        也就是block＋inline＝同一行，但是高被撐開
+                    </div>
+                </div>      
+                <div class="notes_layout">
+                    <p class="title">
+                        什麼是偽元素（Pseudo-elements）？
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">目的</p>
+                        在元素內容內插入虛擬內容，能夠更靈活控制icon樣式和位置。也就是在不增加HTML元素情況下，用CSS進行調整
+                       <p class="subtitle">最常使用的是::before和::after</p> 
+                        <ul>
+                            <li>
+                                添加content屬性：沒有這個，偽元素就不會產生（content:" ",除非想要在偽元素裡加上文字-content:'哈囉你好嗎'）
+                            </li>
+                            <li>要給偽元素 <span class="important">絕對位置</span> 才會顯示（記得你的父層要position:relative）</li>
+                        </ul>
+                        <p class="subtitle">偽元素裡面可以在建立一個偽元素嗎？</p>
+                        <span class="important">ans:不可以！</span>
+                        <p class="subtitle">其他偽元素</p>
+                        <ul>
+                            <li>::first-letter</li>
+                            <li>::placeholder</li>
+                            <li>::marker</li>
+                        </ul>
+                        <p style="margin-top: 30px;">資料來源：https://w3c.hexschool.com/blog/5667df85</p>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        什麼是偽類（Pseudo-classes）？
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">意涵</p>
+                        針對元素的某些狀態或特定條件進行選擇。
+                        <p class="subtitle">常見的偽類</p>
+                        <ul>
+                            <li>:hover</li>
+                            <li>:focus</li>
+                            <li>:active</li>
+                            <li>:first-child</li>
+                            <li>last-child</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        position
+                     </p> 
+                    <div class="content">
+                        <p class="subtitle">staic</p>
+                        就是照原本預設的位置排列
+                        <p class="subtitle">relative</p>
+                        <ul>
+                            <li>就是相對於原本預設的位置做調整</li>
+                            <li>會蓋過「沒有」設定相對定位的東西</li>
+                        </ul>
+                       
+                        <p class="subtitle">absolute</p>
+                        <ul>
+                            <li>以最接近且有定位的父元素當作參考基準點，如果沒有這樣的父元素，那就是以html物件為基準點</li>
+                            <li>如果總共有三層，且外面都有定位，然後最內層是absolute的話，依「最接近」的元素為定為基準</li>
+                            <li>自己會獨立出來一層，所以外層會內縮</li>
+                            <li>跟fixed很像，但absolute並不會隨著網頁滾動而一起動</li>
+                        </ul>
+                        <p class="subtitle">fixed</p>
+                        <ul>
+                            <li>把某個東西固定在畫面的某個地方</li>
+                            <li>自己會獨立出來一層</li>
+                        </ul>
+                        <p class="subtitle">sticky</p>
+                        <ul>
+                            <li>和fixed一樣，都可以使元素在滾動時「固定」在頁面上</li>
+                            <li>和fixed不同處
+                                <ol>
+                                    <li>sticky的定位是相對於父元素</li>
+                                    <li>老舊版本不支援</li>
+                                </ol>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        background-color和background差在哪裡？
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">background-color</p>
+                        <ul>
+                            <li>設定元素背景顏色的屬性</li>
+                        </ul>
+                        <p class="subtitle">background</p>
+                        <ul>
+                            <li>這是一個綜合的屬性，允許你一次性設定多個背景屬性，包括背景顏色、背景圖片、背景位置、重複方式等。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        css選擇器優先級？
+                    </p> 
+                    <div class="content">
+                        <p class="important">ans:!import>行內樣式>id>class=偽元素>型態選擇器</p>
+                        <ul>
+                            <li>!import：偽類，也就是通用的，因此必須小心使用</li>
+                            <li>行內樣式</li>
+                            <li>id</li>
+                            <li>class</li>
+                            <li>型態選擇器：div{ }</li>
+                        </ul>
+                        <p class="important">若是藉由「繼承」的樣式優先級：「最低」</p>
+                        <p class="important">若優先級相同（ex.class和偽元素），則看誰「最後出現」，最後出現的樣式會生效</p>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        px v.s. em v.s. rem
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">絕對單位還是相對單位？</p>
+                        <ul>
+                        <li>
+                            相對單位：em、rem
+                        </li>
+                        <li>
+                            絕對單位：px
+                        </li>
+                        </ul>
+                        <p class="subtitle">em</p>
+                        <ul>
+                            <li>font-size:依據父層字體大小做倍數變動，所以有繼承的問題</li>
+                            <li>width:以「現在這個元素」多大作為基準進行倍數調整</li>
+                        </ul>
+                        <p class="subtitle">rem</p>
+                        <ul>
+                            <li>根據html做倍數變動，更適合用於RWD</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        transform
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">常見用法</p>
+                        <ul>
+                            <li>rotate：旋轉</li>
+                            <li>scale：縮放</li>
+                            <li>translate：平移</li>
+                            <li>skew：傾斜</li>
+                            <li>rotateX/rotateY：3D轉換</li>
+                        </ul>
+                        <p class="subtitle">也可以合在一起寫！</p>
+                        ex.旋轉45度，縮放1.5倍，水平移動20px，垂直移動30px
+                        <div class="example">
+                            transform: rotate(45deg) scale(1.5) translate(20px, 30px);
+                            <p class="important">中間以空格隔開！</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        transform-style
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">意涵</p>
+                        是CSS中用於3D轉換的屬性之一，它定義了在使用CSS進行3D轉換時，子元素是如何在3D空間中呈現的。
+                        <p class="subtitle">值</p>
+                        <ul>
+                            <li>flat：就是平面呈現，跟父元素是不是3D轉換並沒有關係</li>
+                            <li>preserve-3d：子元素將在3D空間中呈現，且這是受到父元素的影響</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        perspective(3D轉換視距)
+                    </p> 
+                    <div class="content">
+                        設定得越小（例如100px），會強化3D效果；反之（例如1000px）則越平緩。
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        transition
+                    </p> 
+                    <div class="content">
+                        <p class="important">transition: [屬性] [持續時間] [控制屬性值的變化速度] [延遲時間];</p>
+                        ex.例如：想讓一個元素的顏色在狀態變化時有一個平滑的過渡效果 
+                        <div class="example">
+                            .element { <br>
+                            transition: color 0.25s ease; <br>
+                          }
+                          <br>
+                          其中，控制屬性值的變化速度（timing-function）的預設值為：ease
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">backface-visibility</p>
+                    <div class="content">
+                        <p class="subtitle">意涵</p>
+                        控制元素背面是否可見（當元素被旋轉或傾斜時）。
+                        <p class="subtitle">值</p>
+                        <ul>
+                            <li>visible（預設）</li>
+                            <li>hidden</li>
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+    
+            <!-- JavaScript筆記 -->
+            <div id="div_js" class="hidden">
+                <div class="notes_layout">
+                    <p class="title">
+                        JavaScript是什麼？它到底在幹嘛？
+                    </p>
+                    <div class="content"> 
+                        <p class="subtitle">意涵</p>
+                        能夠操作網頁上的 HTML 元素、處理事件、發送和接收資料等，使網站變得更加動態和有趣。
+                        <p class="subtitle">它在做什麼？</p>
+                        <ul>
+                            <li>選取網頁元素</li>
+                            <li>控制元素</li>
+                        </ul>
+                        <p class="important">而想要辨識跟修改網頁內容，就必須先知道什麼叫做DOM!</p>
+                        <p class="subtitle">JavaScript怎麼選取網頁元素？</p>
+                        <ul>
+                            <li>
+                                document.getElementById('btn');表示選取id為btn的div元素
+                            </li>
+                            <li>
+                                document.getElementsByTagName('p');表示選取網頁上所有的＜p＞
+                            </li>
+                            <li>
+                                document.getElementsByClassName('nav_btn');表示選取網頁上class為nav_btn的元素
+                            </li>
+                            <li>
+                                document.querySelectorAll('span.important');表示選取網頁上所有class為important的span元素
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        var v.s. let v.s. const
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">可否重複宣告？</p>
+                        <ul>
+                            <li>
+                                let和const不可以重複宣告，不然會有SyntaxError（其中，let可以重新賦值，但是const不行）        
+                            </li>
+                            <li>
+                                var可以重複宣告
+                            </li>
+                        </ul>
+                        <div class="example">
+                            <span class="important">何謂賦值？</span>
+                            <br>
+                            ex. <br>
+                            const student={name:"橘子"};<br>
+                            user.name="柚子";
+                            console.log(user);//會印出柚子
+                        </div>
+                        <p class="subtitle">使用前是否要先宣告？（也就是宣告時就要給值了嗎？）</p>
+                        <ul>
+                            <li>
+                                let和const使用前就要先宣告
+                            </li>
+                        </ul>
+                        <p class="subtitle">是否會被綁定到this？</p>
+                        <ul>
+                            <li>
+                                let和const不會被綁定到this
+                            </li>
+                        </ul>
+                        <p class="subtitle">是否會被提升？</p>
+                        <ul>
+                            <li>
+                                let和const僅會提升到區塊作用域，所以如果在宣告前就使用了變數，那麼就會進入暫時死區 (TDZ)，console會出現Uncaught ReferenceError。
+                            </li>
+                            <li>
+                                var會使得在宣告前就使用該變數的話，不會出現錯誤
+                            </li>
+                        </ul>
+                        <p class="subtitle">何時要用let？何時要用const?</p>
+                        沒有標準答案，但是判斷方法可以看「是否有需要重新賦值」
+                        <p class="important">let和contst是以「區塊」為為範圍；var可以用在全域或是函數裡</p>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        null v.s. undefined
+                    </p> 
+                    <div class="content">
+                        <ul>
+                            <li>
+                                如果變數沒有提供初始值，而你要使用這個變數：undefined
+                            </li>
+                            <li>
+                                如果要使用一個物件的屬性或是元素，而該屬性或元素不存在：undefined
+                            </li>
+                            <li>
+                                該傳參數的回調函數沒有傳參數：undefined
+                            </li>
+                            <li>
+                                使用void：undefined
+                            </li>
+                            <li>null的用意是用來宣告「空值」</li>
+                            <li>DOM操作時，若DOM元素不存在：null</li>
+                        </ul>
+                        <p>所以簡單來說，undefined是指：</p>
+                        <ul>
+                            <li>宣告變數但沒有給值</li>
+                            <li>呼叫函數，但是缺少參數</li>
+                            <li>使用一個物件沒有的屬性</li>
+                        </ul>
+                        <p class="subtitle">null==undefined，return true</p>
+                        原因是因為：==會強制轉換資料型態！所以所以實務上不建議使用==
+                        <p class="subtitle">null===undefined，return false</p>
+                        <p class="important">JavaScript是「給值」時，才決定資料型態的！</p>
+                    </div>
+                </div>
+
+                <div class="notes_layout">
+                    <p class="title">
+                        ＝＝＝ v.s. ＝＝
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">=為賦值運算子</p>
+                        ex. var x=1; （即把1 assign給x，給值的這個動作就叫做"assign"）
+                        <p class="subtitle">==即表示等於</p>
+                        ex.222=="222"，回傳的答案會是“true”
+                        <br>
+                        原因是因為：==會強制轉換資料型態！所以所以實務上不建議使用==
+                        <p class="subtitle">===為JS特有的（較嚴謹）</p>
+                        ex.222==="222"，回傳的答案會是“false”
+                    </div>
+                </div>
+
+                <div class="notes_layout">
+                    <p class="title">
+                        什麼是function？為什麼需要function？
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">意涵</p>
+                        就是執行網頁程式動作的命令！
+                        <p class="important">程式語言規則-DRY(Don't repeat youself)</p>
+                        因為如果同樣的程式碼散落在不同地方，會造成一個地方要改，其他地方也要跟著改，所以就乾脆全部寫在function裡面一起處理！
+                        <p class="subtitle">內建函式</p>
+                        ex.alert()、document.write()、isNaN()、prompt("放問題","給使用者回答")
+                        <p class="subtitle">函式怎麼跑？</p>
+                        <div class="example">
+                            function greeting(text){ <br>
+                                document.write(text);<br>
+                            } <br>
+                            greeting('hello, how are you?');
+                        </div>
+                        <ol>
+                            <li>function greeting(){ }:是在告訴browser，我有一個函數長這樣喔，已經存在記憶體裡了，我要用再叫你</li>
+                            <li>'hello, how are you?'當作這個函數的「參數」</li>
+                            <li>傳參數給text變數，亦即 var text='hello, how are you?'</li>
+                            <li>執行函式：輸出text到網頁上</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        表達式v.s.陳述式
+                    </p> 
+                    <div class="content">
+                        <ul>
+                            <li>表達式：會回傳值</li>
+                            <li>陳述式：執行完動作之後不會回傳值。所以會用console.log()判斷。另外，會和運算式混用</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        Scope（作用域）
+                    </p> 
+                    <div class="content">
+                        <div class="subtitle">意涵</div>
+                        在程式碼中定義變數的範圍，確定變數可以在哪些地方使用。
+                        <div class="subtitle">種類</div>
+                        <ul>
+                            <li>Global scope：全域變數就會有</li>
+                            <li>Function scope</li>
+                            <li>Block scope：2015後，ES6出現-let和const</li>
+                        </ul>
+                        <div class="subtitle">自動變成全域變數？</div>
+                        <ul>
+                            <li>就是在賦值的時候沒有用let和或是const，那麼就會變成全域變數。<span class="important">即使賦值操作是在函式內</span></li>
+                            <li>但是這樣做容易產生問題，所以ES6出現了let和const兩個關鍵字，將變數作用域限制在宣告變數之區域內。</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        Hoisting（提升）
+                    </p>
+                    <div class="content"> 
+                        <p class="subtitle">意涵</p>
+                        <ul>
+                            <li>
+                                所謂的hoisting是指，你所宣告的變數「不會」在程式碼被執行前，被移動到作用域頂部，其中var會提升到「函式」作用域;let和const會被提升到區塊作用域。（函式作用域是指，var可以在宣告函式之前就呼叫該函式喔！）
+                            </li>
+                            <li class="important">只有提升「宣告」這件事喔！並不會賦值</li>
+                        </ul>
+                        <p class="subtitle">何謂TDZ（暫時死區）</p>
+                        意涵：就是用let或是const宣告變數時，變數在宣告前沒有辦法使用，否則會導致"ReferenceError。"<br>
+                        目的：是為了避免還沒被宣告的變數被拿來用。
+                        <p class="important">會被提升的只有「宣告變數」這件事喔！！！</p>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        callback（回調函數）
+                    </p>
+                    <div class="content"> 
+                    
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">不具名函式</p>
+                    <div class="content">
+                        <p class="subtitle">意涵</p>
+                        它是沒有名字的函式，所以你沒有辦法呼叫它。它是被當成「參數」要傳遞給其他函式用的！ <br>
+                        <p class="subtitle">匿名函式表達式</p>
+                        <div class="example">
+                            let anonymousFunction1 = function() { <br>
+                                console.log("這是一個匿名函式表達式。"); <br>
+                              };
+                              <p class="important">使用function關鍵字</p>
+                        </div>
+                        <p class="subtitle">箭頭函式</p>
+                        <div class="example">
+                            let anonymousFunction2 = () => { <br>
+                                console.log("這是一個箭頭函式。"); <br>
+                              };
+                        </div>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        IIFE （立即函數）
+                     </p> 
+                    <div class="content">
+                        <p class="subtitle">意義</p>
+                        用於建立一個匿名函式並立即執行它。
+                            <div class="important">
+                                (function() { <br>
+                                    console.log("這是一個立即執行函數！"); <br>
+                                })();
+                            </div>
+                        <p class="subtitle">內涵</p>
+                        <ul>
+                            <li>隔離作用域：函式內部的變數不會污染全域變數，同時避免了外部作用域污染函式內部。</li>
+                            <li>立即執行，不需要額外呼叫</li>
+                            <li>保護變數：能夠使特定變數不受外部影響</li>
+                            <li>避免命名衝突：立即函式內的變數不會和外部變數產生命名衝突</li>
+                        </ul> 
+                        <div class="example">
+                            (function(x, y) { <br>
+                                console.log("相加的結果是：" + (x + y)); <br>
+                              })(5, 10);
+                        </div> 
+                        <ol>
+                            <li>匿名函數接受了x和y兩個參數，並將兩個相加之後，在console顯示出結果</li>
+                            <li>用()把函數包起來，形成匿名函數</li>
+                            <li>（5,10）是立即函式的實際調用，將兩個參數回傳給函式</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        array(陣列)
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">為什麼需要陣列？</p>
+                        不然的話，萬一你有很多小項目，那麼這些小項目都要一個一個建立變數。如果使用陣列，還能對資料隨時做新增、修改或是刪除。
+                        <p class="subtitle">建構一個陣列</p>
+                        <div class="example">
+                            var months=[1,2,3,4,5,6,7,8,9,10,11,12];<br>
+                            或是寫成<br>
+                            var months=new Array(1,2,3,4,5,6,7,8,9,10,11,12);
+                        </div>
+                        <p class="subtitle">陣列內的資料型態？</p>
+                        <p class="important">可以存放各種型別的值</p> 
+                        <p class="subtitle">索引值</p>
+                        <ul>
+                            <li>用來表示資料在陣列的哪個位置</li>
+                            <li>索引值從<span class="important">"0"</span>開始！每個元素的索引即<span class="important">位置-1</span></li>
+                            <li>以上述例子，如果我要找5月，就會是months[4]=5;</li>
+                            <li>用lenth存取長度屬性-ex.months[months.length-1]，這樣就能存取陣列中最後一個項目的值了</li>
+                            <li>在陣列前端/末端新增項目:陣列名稱.underlined()/陣列名稱.push()/或是直接使用陣列名稱[陣列名稱.length]=''去做更動</li>
+                            <li>刪除陣列中最後一個/第一個項目:陣列名稱.pop()/陣列名稱.shift()</li>
+                        </ul>
+                        <div class="example">
+                            <p>ex.有一個陣列長這樣：var x=[1,2,3,'dog','cat',3.14,true,false];</p>
+                            <ul>
+                                <li>在末端增加"hello"-x.push('hello');</li>
+                                <li>在前端加上"你好"-x.unshift('你好')</li>
+                                <li>刪除最後一個項目-x.pop();</li>
+                                <li>刪除第一個項目-x.shift();</li>
+                                <li>索引第4個-x[4]='cat';</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        for迴圈 v.s. forEach
+                    </p>
+                    <div class="content">
+                         
+                    <p class="subtitle">
+                        for迴圈
+                    </p>
+                    <ul>
+                        <li>
+                            可以使用break
+                        </li>
+                        <li>
+                            但是指令語法要寫比較長
+                        </li>
+                    </ul>
+                    <p class="subtitle">
+                        forEach
+                    </p>
+                    <ul>
+                        <li>
+                            比for迴圈簡潔
+                        </li>
+                        <li class="important">
+                            不可以使用break、continue跳出回圈，也就是說forEach不能提早跑出迴圈
+                        </li>
+                        <li>只會遍歷陣列，不會回傳新的陣列</li>
+                    </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        什麼是JavaScript html DOM EventListener？
+                    </p>
+                    <div class="content"> 
+                        <p class="subtitle">event</p>
+                        <ul>
+                            <li>所謂的事件就是只在document中的特定事情</li>
+                            <li>ex.click、mousemove等</li>
+                        </ul>
+                        <p class="subtitle">EventListener</p>
+                        即捕獲和處理事件的函數
+                        <p class="subtitle">內涵</p>
+                        包含：EventListener()、Event Object、Event Bubble v.s. Event Capturing、具名函數與匿名函數
+                    </div>
+                </div>
+
+                <div class="notes_layout">
+                    <p class="title">
+                        EventListener()？
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">意涵</p>
+                        包含addEventListener()（監聽事件）和removeEventListener()（移除監聽事件）
+                        <p class="subtitle">addEventListener()</p>
+                        <p class="important">element.addEventListener(event,function,useCapture);</p>
+                        <ul>
+                            <li>element:你要要監聽哪個元素</li>
+                            <li>event:你想發生什麼事？比如說按按鈕-click、滑鼠放在上面產生變化-mouseover</li>
+                            <li>function:函數的名稱，事件發生時要執行的函數</li>
+                            <li>useCapture:指定事件是否在捕獲階段觸發：若為true-表示在捕獲階段處理;false或「省略」則是在冒泡階段處理。</li>
+                            <li>Event Object:監聽事件發生時，瀏覽器會去執行透過addEventListener()產生的EventListener(即function），此時，EventListener會建立「物件」，以參數形式傳給function</li>
+                        </ul>
+                        <div class="example">
+                            <span>JavaScript</span>
+                            <p>假設我在HTML有一個id為myButton的button元素</p>
+                            // 獲取按鈕元素<br>
+                            var button = document.getElementById('myButton');<br>
+
+                            // 定義事件處理函數<br>
+                            function handleClick() {<br>
+                            alert('按鈕被點擊了！');<br>
+                            }<br>
+
+                            // 使用addEventListener()添加點擊事件監聽器，並設置捕獲階段為true<br>
+                            button.addEventListener('click', handleClick, true);
+                        </div>
+                        <p class="subtitle">removeEventListener()</p>
+                        <p class="important">element.removeEventListener(event,listener[,useCapture];</p>
+                        <ul>
+                            <li>listener[]:你要移除的事件監聽器函數</li>
+                        </ul>
+                        <p class="important">你要移除的事件監聽器函數必須和添加事件監聽器的函數一樣，所以，匿名函數就沒有辦法使用removeEventListener()</p>
+                        <div class="example">
+                            <span>JavaScript</span>
+                            <p>假設我在HTML有一個id為myButton的button元素和一個id為removeButtonListener的button元素</p>
+                            // 獲取按鈕元素<br>
+                            var button = document.getElementById('myButton');<br>
+                            var removeButton = document.getElementById('removeButtonListener');<br>
+
+                            // 定義事件處理函數<br>
+                            function handleClick() {<br>
+                            alert('按鈕被點擊了！');<br>
+                            }<br>
+
+                            // 使用addEventListener()添加點擊事件監聽器<br>
+                            button.addEventListener('click', handleClick);<br>
+
+                            // 使用addEventListener()添加點擊事件監聽器，用於移除另一個按鈕的點擊事件<br>
+                            removeButton.addEventListener('click', function() {<br>
+                            // 移除事件監聽器<br>
+                            button.removeEventListener('click', handleClick);<br>
+                            alert('事件監聽器已被移除！');<br>
+                            });
+
+                        </div>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        什麼是Event Object？
+                    </p> 
+                    <div class="content">
+                        <p class="important" style="font-size: 25px;">element.addEventListener(event,function（event）);</p>
+                        <p class="subtitle">意涵</p>
+                        所有跟這個event有關的屬性，都會聚集在這個event object裡，作為回調函數的「參數」傳遞給事件處理器。
+                        <br>
+                        白話文就是：我要處理「誰」，然後這個對象以及他的相關資訊，都存在這個event object裡面！
+                        <p class="subtitle">事件屬性</p>
+                        例如：
+                        <ul>
+                            <li>event.type：click、keydown...</li>
+                            <li>event.target</li>
+                            <li>event.keyCode</li>
+                        </ul>
+                        <p class="subtitle">事件方法</p>
+                        <ul>
+                            <li>event.preventDefault()</li>
+                            <li>eventstopPropagation()-停止事件傳播:確保按下按鈕時，只有按鈕本身的操作被執行</li>
+                            <li>event.keyCode</li>
+                        </ul>
+                        <p class="subtitle">例子</p>
+                        <div class="example">
+                        var button = document.getElementById('myButton');<br>
+
+                        button.addEventListener('click', function(event) {<br>
+                        // 獲取觸發事件的元素<br>
+                        var targetElement = event.target;<br>
+
+                        // 獲取事件的類型<br>
+                        var eventType = event.type;<br>
+
+                        // 獲取滑鼠點擊的位置<br>
+                        var clickPosition = '點擊位置：' + event.clientX + ', ' + event.clientY;<br>
+
+                        // 在console上顯示<br>
+                        console.log('觸發事件的元素：', targetElement);<br>
+                        console.log('事件類型：', eventType);<br>
+                        console.log(clickPosition);<br>
+                        });<br>
+                        <p class="important">參數不是都叫做event，只是習慣，這樣能提高可讀性。你也可以取別的，只要符合js的變數命名規定即可</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        Event Bubble v.s. Event Capturing（不太懂）
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">事件傳遞過程三階段</p>
+                        <ul>
+                            <li>Capturing Phase（捕獲階段）：最外層元素項最內層元素傳遞</li>
+                            <li>Target Phase（目標階段）：事件會在目標元素上觸發</li>
+                            <li>Bubbling Phase（冒泡階段）：最內層元素項最外層元素傳遞</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        發生CORS怎麼辦?
+                    </p> 
+                    <div class="content">
+                        <p class="subtitle">什麼是CORS（跨來源資源共用）？</p>
+                        就是請求對象和來源對象不同的時候，HTTP請求受到限制！
+
+                        <p class="subtitle">同源政策：同源與非同源？</p>
+
+                        <p class="subtitle">該如何解決CORS?</p>
+                        <ol>
+                            <li>下載Node.js</li>
+                            <li>在終端機下指令-1：</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        當按下某按鈕，以改變該按鈕的css
+                    </p> 
+                    <div class="content">
+                        <div class="subtitle">
+                            方法一
+                        </div>
+                        <div class="example">
+                            var btn = document.getElementById('btn_btn');<br>
+                                if (btn) {<br>
+                                    btn.style.display = 'none';<br>
+                                }<br>
+                        </div>
+                        <div class="subtitle">
+                            方法二
+                        </div>    
+                        <div class="example">
+                            var overlay_btn = document.getElementById('show_menu_overlay');<br>
+                            overlay_btn.addEventListener("click",function(){ <br>
+                                btn.style.display="none"; <br>
+                            }) <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- JQuery筆記 -->
+            <div id="div_jquery" class="hidden">
+                <div class="notes_layout">
+                    <p class="title">
+                        什麼是jQuery？
+                    </p> 
+                    <div class="content">
+                        「JavaScript的函式庫」，jQuery可以用少少行數，完成需要大量行數的純JavaScript才做得到的事，且jQuery是最適合入門的JS函式庫。
+                        <p class="subtitle">附加方式</p>
+                        <ul>
+                            <li>jQuery也是js檔案，所以附加方式就跟平常附加外部js一樣</li>
+                            <li>最常見的是引用GOOGLE CDN：＜script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"＞，<span class="important">放在head中</span></li>
+                        </ul>
+                        <p class="subtitle">在網頁上加上jQuery吧！</p>
+                        引用完之後，就可以再用一個＜script＞標籤寫$(document).ready(function){ };，也可以縮寫為：$(function()){};
+                        <ul>
+                            <li>$(document).ready()是jQuery的函式，會等到HTML「載完」才執行這段</li>
+                            <li>原因：browser遇到JavaScript會馬上執行，這樣使用者會先看到有趣的東西，才進來載HTML</li>
+                        </ul>
+                        <p class="subtitle">引入jQuery注意事項</p>
+                        <ul>
+                            <li>不要在引用jQuery的script下寫任何程式</li>
+                            <li>js程式要放在所有css之「後」，因為應該要先載入css才去執行js</li>
+                            <li>jQuery通常會有很多大括號，為了辨別，在函式最後應該標注結束位置</li>
+                        </ul>
+                        <p class="subtitle">jQuery怎麼選取網頁元素？-jQuery物件</p>
+                        ex.
+                        <ul>
+                            <li>$('.btn')，表示選取class為btn的元素</li>
+                            <li>$('#btn_jquery')，表示選取id為btn_jquery的元素</li>
+                            <li>$('p')，表示選取網頁中的所有＜p＞</li>
+                        </ul>
+                        <p class="subtitle">自動迴圈</p>
+                        <div class="example">
+                            ex.要隱藏id為imgimg的所有img元素<br>
+                            $('#imgimg').hide();
+                        </div>
+                        <p class="subtitle">鏈結函式</p>
+                        <div class="example">
+                            ex.假設我有一個id為a的長方形，寬為300，高為100 <br>
+                            $('#a').width(300).height(300);
+                        </div>
+                        <div class="example">
+                            ex.假設我有一個id為xy的長方形，寬為500，高為300,並且加入'hello!'的文字，還有讓他以2000毫秒淡出畫面 <br>
+                           $('#xy').width(500).height(300).text('hello!').fadeOut(2000);
+                        </div>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">更改HTML元素及其內容</p>
+                    <div class="content">
+                        <p class="subtitle">變更HTML元素</p>
+                        <div class="example">
+                            ex. <br>
+                            我有一個id為container的div，裡面有一個id叫做content的div，content裡面有＜h1＞哈囉＜/h1＞。 現在我想把＜h1＞改成span元素，文字改成hello!
+                            $('#content').html('＜span＞hello!＜/span＞')
+                            <p class="important">html()和text()要小心！</p>
+                            假設網頁上有5個div，執行var x=$('div').html(); <br>
+                            那麼，x存放的值就會是「第一個」div的HTML
+                        </div>
+                        <p class="subtitle">變更元素內容</p>
+                        <div class="example">
+                            ex. <br>
+                            我有一個id為container的div，裡面有一個id叫做content的div，content裡面有＜h1＞哈囉＜/h1＞。 現在我想把＜h1＞內的文字改成「你好！」
+                            $('#content h1').text('你好！');
+                        </div>
+                        <p class="subtitle">插入新的元素</p>
+                        <div class="example">
+                            ex. <br>
+                            我有一個id為container的div，裡面有一個id叫做content的div，content裡面有＜h1＞哈囉＜/h1＞。現在我想在content裡面插入＜span＞hello!＜/span＞
+                            $('#content').append('＜span＞hello!＜/span＞');
+                            <p class="important">append()是以指定區域的最後一個HTML子元素為準，在該子元素後面「插入」新的元素。這對於＜ul＞＜ol＞新增項目是一個好方法！</p>
+                        </div>
+                        <p class="important">重點整理:</p>
+                        <ul>
+                            <li>.html()是更改html標籤</li>
+                            <li>.text()是更改內容</li>
+                            <li>.append()是在指定元素內插入最後一個子元素</li>
+                            <li>.prepend()是在指定元素內第一個位置插入新的子元素</li>
+                            <li>.before()是指在選擇元素前面插入</li>
+                            <li>.after()是指在選擇元素後面插入</li>
+                            <li>.remove()移除指定的元素</li>
+                            <li>.replaceWith()把指定元素換成其他元素</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">設定標籤屬性</p>
+                    <div class="content">
+                        <div class="subtitle">addClass()</div>
+                        即加入class到元素內 
+                        <div class="example">
+                            ex.我想加入一個叫做btn的class到＜button＞內 <br>
+                            $('button').addClass('btn');
+                        </div>
+                        <div class="example">
+                            ex.我想加入一個叫做worklink的class到＜a＞內 <br>
+                            $('a[href^="http://]"').addClass('worklink');
+                        </div>
+                        <div class="subtitle">removeClass()</div>
+                        即移除元素內的class <br>
+                        
+                        <div class="example">
+                            ex.我想移除id為nav_1的div中的btn這個class <br>
+                            $('#nav_1').removeClass('btn');                        
+                        </div>
+                        <p class="important">
+                            addClass()和removeClass()放class名稱時，不需要在名稱前面加上"."
+                        </p>
+                        <div class="subtitle">toggleClass()</div>
+                        即切換 <br>
+                        <div class="example">
+                            ex.有一個按鈕(class為btn)，還沒按的時候，背景為灰色，字為黑色;按下去後，背景為黑色，字為白色 <br>
+                            .btn{ <br>
+                                color:black; <br>
+                                background-color:gray;
+                            } <br><br>
+                            .btn .active{ <br>
+                                color:white; <br>
+                                background-color:black; <br>
+                            }
+                            <ul>
+                                <li>先在css設定你一開始btn的顏色）</li>
+                                <li> 接著在設定一個class代表按下去這個狀況的</li>
+                            </ul>
+                        </div>
+                        <div class="example">
+                            $('.btn').click(function(){ <br>
+                                $(this).$(this).toggleClass('active'); <br>
+                            })
+                        </div>
+                        <div class="subtitle">css()</div>
+                        <div class="example">
+                            ex.我想把叫做aside_menu的class，都加上黑色邊框 <br>
+                            $('.aside_menu').css('border','1px soild black');
+                            <p class="important">所以，要調整css的屬性，就是屬性在前，直放在後，都用引號括起來</p>
+                        </div>
+                        <div class="example">
+                            ex.一次改很多css屬性，我想把叫做aside_menu的class改成背景為黃色、字為咖啡色、加上邊框2px黑色實線，並以物件實字寫：<br>
+                            $('.aside_menu').css({ <br>
+                                'background-color' :'yellow'; <br>
+                                'color':'brown'; br
+                                'border':'2px soild black';<br>
+                            })
+                        </div>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        DOM(Domcument Object Model)
+                    </p> 
+                    <div class="content">
+                        <ul>
+                            <li>
+                                使browser記住HTML標籤、屬性還有檔案出現順序」
+                            </li>
+                            <li>使JavaScript可以跟網頁元素溝通</li>
+                        </ul> 
+                        <p class="important">DOM本身不是JavaScript喔！他只是讓JavaSctipt可以跟HTM做溝通，並且更改</p>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        .innerHTML和.innerText差在哪裡？
+                    </p>
+                    <div class="content"> 
+                        <p class="subtitle">內涵</p>
+                        <ul>
+                            <li>.innerHTML：連元素都能變更</li>
+                            <li>.innerText：只能修改元素的文字內容</li>
+                        </ul>
+                        <p class="subtitle">例子-innerHTML</p>
+                        <div class="example">
+                            <p> 例如在HTML有一個id為myElement的元素，內容為「原始內容」</p>
+                            
+                            var myElement = document.getElementById('myElement'); <br>
+                            // 使用 innerHTML 更新元素內容 <br>
+                            myElement.innerHTML = '新的內容 ＜strong＞加粗＜/strong＞'; 
+                        </div>
+                        <p class="subtitle">例子-innerText</p>
+                        <div class="example">
+                            <p> 例如在HTML有一個id為myElement的元素，內容為「原始內容」</p>
+                            
+                            var myElement = document.getElementById('myElement'); <br>
+                            // 使用 innerText 更新元素文本內容 <br>
+                            myElement.innerText = '新的文本內容';
+                        </div>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">AJAX是什麼</p>
+                    <p class="content">
+                        學習來源：https://tw.alphacamp.co/blog/ajax-asynchronous-request
+                    </p>
+                </div>
+            </div>
+
+             <!--PHP&MySQL筆記 -->
+             <div id="div_php" class="hidden">
+                <div class="notes_layout">
+                    <p class="title"></p>
+                    <p class="content"></p>
+                </div>
+            </div>
+    
+
+            <!-- 動畫筆記 -->
+            <div id="div_animation" class="hidden">
+                <div class="notes_layout">
+                    <p class="title">
+                        隨滑鼠滑到哪裡，div跟著動起來！
+                    </p> 
+                    <div class="content">
+                        <p>這個動畫叫做"AOS animation"，只要有以下步驟即可完成：</p>
+                        <ol>
+                            <li>
+                                到https://github.com/michalsnik/aos ，複製安裝AOS的的程式碼到“標籤head裡“和“標籤body 結尾之前“。
+                            </li>
+                            <li>
+                                在https://michalsnik.github.io/aos/裡，選擇你要的樣式，然後把data-aos那段複製貼上。
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+    
+            <!--    Git&GitHub筆記 -->
+            <div id="div_git_github" class="hidden">
+                <div class="notes_layout">
+                    <p class="title">什麼是Git？（未解決）</p>
+                    <div class="content"> 
+                        <p class="subtitle">意涵</p>
+                        Git是一種分散式版本控制系統，它被廣泛用於協作軟體開發項目。版本控制是一種追蹤和管理代碼變更的系統，它允許多人在同一個項目上協作，同時保留對代碼歷史的完整記錄。
+                        <p class="subtitle">優勢/重要性</p>
+                        <ul>
+                            <li>非連線狀態做版本控管</li>
+                        </ul>
+                        資料來源：https://www.youtube.com/watch?v=0y-xgoyebLg
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">什麼是GitHub？（未解決）</p>
+                    <div class="content"> 
+                        <p class="subtitle">意涵</p>
+                        
+                        <p class="subtitle">優勢/重要性</p>
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!--其他筆記-->
+            <div id="div_other" class="hidden">
+                <div class="notes_layout">
+                    <p class="title">
+                        尋找檔案路徑之作法
+                    </p> 
+                    <div class="content">
+                        假設我要找在桌面>前端作品們>樂遊新竹城>hsinchu_park.json
+                        <ol>
+                            <li>在終端機輸入cd Desktop</li>
+                            <li>輸入ls：它會顯示當前工作目錄（目前所在的文件夾）的所有檔案和子目錄。</li>
+                            <li>輸入cd 前端作品們</li>
+                            <li>輸入ls</li>
+                            <li>輸入cd 樂遊新竹城</li>
+                            <li>輸入pwd：顯示路徑</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        物件導向
+                    </p> 
+                    <div class="content">
+                        
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        繼承
+                    </p> 
+                    <div class="content">
+                        
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                        當我想控制相同元素，但是除了第一個出現的，該怎麼做？
+                    </p> 
+                    <div class="content">
+                        ex. <br>
+                        假設我有一個叫做content的class，裡面有很多個叫做subtitle的class，我希望第二個以後出現的subtitle，可以調整跟上方文字的距離。
+                        <div class="example">
+                            var contents=document.querySelectorAll('.content'); <br>
+                            contents.forEach(function(content){<br>
+                                var subtitles=content.querySelectorAll('.subtitle');<br>
+                                var i;<br><br>
+
+                                for(i=1;i＜subtitles.length;i++){<br>
+                                    subtitles[i].style.marginTop='30px';<br>
+                                }<br>
+                            })
+                        </div>
+                        也就是說：
+                        <ol>
+                            <li>
+                                先去找所有程式碼裡面，名字叫做conent的class
+                            </li>
+                            <li>利用forEach遍歷整個程式碼，找到所有content裡面，名字叫做subtitle的class們</li>
+                            <li>再利用for迴圈，寫你要的規則</li>
+                            <li>最後，利用索引.style去調整css的部分，<span class="important">注意marginTop寫法！就不要中間那槓了，改成第一個字母大寫</span></li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="notes_layout">
+                    <p class="title">
+                            overlay選單，正確連到指定位置
+                    </p>
+                    <div class="content">
+                         
+                        <p class="subtitle">HTML部分</p>
+                            <ul>
+                                <li>
+                                    內部區域：onclick="scrollToSection('id_name')"
+                                </li>
+                                <li>
+                                    外部區域：onclick="location.href='notes.html'"
+                                </li>
+                            </ul>
+                            <p class="subtitle">JavaScript部分</p>
+                            <div class="example">
+                                function scrollToSection(id_name) {
+                                    <br>
+                                    // 滾動到相應的位置
+                                    <br>
+                                    const section = document.getElementById(id_name);<br>
+                                    if (section) {<br>
+                                        section.scrollIntoView({ behavior: 'smooth' });<br>
+                                    }<br>
+                                    <br>
+                                    // 關閉overlay<br>
+                                    const overlay = document.getElementById('show_menu_overlay');<br>
+                                    if (overlay) {<br>
+                                        overlay.style.display = 'none';<br>
+                                    }<br>
+                                }
+                            </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+   
+    <!-- footer -->
+    <footer class="footer fixed-bottom" id="footer">©Hsing jou lu 2024</footer>        
+
+    <!-- 引入外部js -->
+    <script src="notes.js"></script>
+</body>
+</html>
